@@ -1,0 +1,180 @@
+<div class="panel panel-default">
+	<div class="panel-heading panel-title">Profile<p class="title-sub">Modify your personal information.</p></div>
+	<div style="padding:5px 3px 5px 3px">
+		<a ng-click="cancel()" class="btn btn-small btn-primary">Back</a>
+	</div>
+	<br>
+	
+	<div class="panel-body">
+		<a data-toggle="collapse" data-target="#general"><span class="glyphicon glyphicon-cog">&nbsp;</span>General Account Settings</a>
+		<hr style="padding:0px;"/>
+		<div id="general" class="collapse in" style="padding:5px 3px 5px 3px">
+			<form class="form-horizontal" role="form">
+				<div ng-repeat="item in profile">
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Email</label>
+						<div class="col-sm-4">
+							<p class="form-control">{{ item.email }}</p>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="firstname" class="col-sm-2 control-label">Firstname</label>
+						<div class="col-sm-4">
+							<input class="form-control" id="firstname" ng-model="item.firstname" placeholder="Firstname"/>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="lastname" class="col-sm-2 control-label">Lastname</label>
+						<div class="col-sm-4">
+							<input class="form-control" id="lastname" ng-model="item.lastname" placeholder="Lastname"/>
+						</div>
+					</div>
+				</div>		
+			</form>
+		</div>
+
+		<a data-toggle="collapse" data-target="#changePassword"><span class="glyphicon glyphicon-lock">&nbsp;</span>Change Password</a>
+		<hr style="padding:0px;"/>
+		<div id="changePassword" class="collapse" style="padding:5px 3px 5px 3px">
+			<form class="form-horizontal" role="form">
+				<div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Old Password</label>
+						<div class="col-sm-4">
+							<input class="form-control"type="password" ng-model="oldPassword" placeholder="Old Password"/>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-2 control-label">New Password</label>
+						<div class="col-sm-4">
+							<input class="form-control" type="password" ng-model="newPassword" placeholder="New Password"/>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Confirm New Password</label>
+						<div class="col-sm-4">
+							<input class="form-control" type="password" ng-model="cnfNewPassword" placeholder="Confirm New Password"/>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-4">
+							<a ng-click="changePassword()" class="btn btn-small btn-primary">OK</a>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-4">
+							<div class="alert {{passwordAlerts.type}}">
+								{{passwordAlerts.message}}
+							</div>
+						</div>
+					</div>				
+				</div>		
+			</form>
+		</div>
+		
+		<div ng-show="isAdmin">
+			<a data-toggle="collapse" data-target="#createNewUser"><span class="glyphicon glyphicon-plus">&nbsp;</span>Create New User</a>
+			<hr style="padding:0px;"/>
+			<div id="createNewUser" class="collapse" style="padding:5px 3px 5px 3px">
+				<form class="form-horizontal" role="form">
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Email</label>
+							<div class="col-sm-4">
+								<input class="form-control" ng-model="newUserEmail" placeholder="Email"/>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Firstname</label>
+							<div class="col-sm-4">
+								<input class="form-control" ng-model="newUserFirstname" placeholder="Firstname"/>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Lastname</label>
+							<div class="col-sm-4">
+								<input class="form-control" ng-model="newUserLastname" placeholder="Lastname"/>
+							</div>
+						</div>
+			
+						<div class="form-group">
+							<label class="col-sm-2 control-label">New Password</label>
+							<div class="col-sm-4">
+								<input class="form-control" type="password" ng-model="newUserPassword" placeholder="New Password"/>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Confirm New Password</label>
+							<div class="col-sm-4">
+								<input class="form-control" type="password" ng-model="newUserCnfPassword" placeholder="Confirm New Password"/>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-4">
+								<a ng-click="createUser()()" class="btn btn-small btn-primary">OK</a>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-4">
+								<div class="alert {{newUserAlerts.type}}">
+									{{newUserAlerts.message}}
+								</div>
+							</div>
+						</div>
+				</form>
+			</div>
+		</div>
+	</div> <!-- panel body -->
+	
+	<!--<div ng-show="isAdmin">
+		<button class="btn btn-small btn-warning" ng-click="showUserTable()">Load User Table</button>
+		<div class="panel panel-default">
+			<div class="panel-heading panel-title">Users<p class="title-sub">Full list of all the users.</p></div>
+			<div align="left">
+				<form align="justified" style="padding:5px 3px 5px 3px" class="form-inline">
+					<div class="form-group">				
+						<div class="input-group">
+							<input type="text" ng-model="searchText" class="form-control" placeholder="Search" aria-describedby="basic-addon2">
+							<span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+						</div>
+					</div>
+					&nbsp;&nbsp;&nbsp;
+					<div class="form-group">
+						<div class="input-group">
+							<select id="sort" class="form-control" ng-model="orderBy" placeholder="Sort">
+								<option></option>
+								<option>firstname</option>
+								<option>lastname</option>
+							</select>
+							<span class="input-group-addon"><span class="glyphicon glyphicon-sort-by-attributes"></span></span>
+						</div>								
+					</div>
+					&nbsp;&nbsp;&nbsp;
+					<div class="form-group">
+						<b>Show items:</b>
+						<div class="input-group">
+							<select class="form-control" ng-model="currentNumSelection" ng-options="opt.label for opt in showNumItemsOnPage"  ng-change="refreshTable(true)">
+							</select>
+						</div>								
+					</div>
+				</form>
+			</div>
+			<users-paginated-table></users-paginated-table>
+		</div>
+	</div>-->
+	
+	<br>
+	<div style="padding:5px 3px 5px 3px">
+		<a ng-click="cancel()" class="btn btn-small btn-primary">Back</a>
+	</div>
+</div><!-- panel -->

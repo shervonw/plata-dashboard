@@ -1,0 +1,59 @@
+<div class="panel panel-default">
+	<div class="panel-heading panel-title">{{ heading }}<p class="title-sub">Modify a client's information.</p></div>
+	<div class="panel-body">
+		<form class="form-horizontal" role="form">
+			<div ng-repeat="person in user">
+				<div class="form-group">
+					<label for="firstname" class="col-sm-2 control-label">Firstname</label>
+					<div class="col-sm-4">
+						<input class="form-control" id="firstname" ng-model="person.firstname" placeholder="Firstname"/>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="lastname" class="col-sm-2 control-label">Lastname</label>
+					<div class="col-sm-4">
+						<input class="form-control" id="lastname" ng-model="person.lastname" placeholder="Lastname"/>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="lastname" class="col-sm-2 control-label">Available Devices <p>{{devices}}</p></label>
+				<div class="col-sm-4">
+					<input class="form-control" ng-model="searchAdd" placeholder="Search for device">
+					<div class="over-y">
+					<ul class="list-group">
+						<li class="list-group-item" ng-repeat="option in selectOpts | filter:searchAdd" ng-click="addDevice(option)">
+								<a class="btn btn-xs btn-info"><span class="glyphicon glyphicon-plus"></span></a>
+								<b>{{ option.key }}</b>
+						</li>						
+					</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Devices Owned Currently</label>
+				<div class="col-sm-4">
+					<input class="form-control" ng-model="searchRemoved" placeholder="Search for device">
+					<div class="over-y">
+					<ul class="list-group">
+						<li class="list-group-item" ng-repeat="item in devicesClientLoaned | filter: searchRemoved" ng-click="removeDevice(item)">
+								<a class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-remove"></span></a>
+								<b ng-model="item.name" >{{ item.name }}</b>
+						</li>
+					</ul>
+					</div>
+					{{ noDevicesMsg }}
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<a ng-click="cancel()" class="btn btn-small">Back</a>
+				</div>
+			</div>
+		</form>
+	</div> <!-- panel body -->
+</div><!-- panel -->

@@ -1,0 +1,45 @@
+<div class="panel panel-default">
+	<div class="panel-heading panel-title">Login<p class="title-sub">Allow yourself access to all the information available.</p></div>
+	<div class="panel-body">	
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Email</label>
+				<div class="col-sm-4">
+					<input type="email" class="form-control" name="email" ng-model="email" placeholder="Email" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Password</label>
+				<div class="col-sm-4">
+					<input ng-keyup="$event.keyCode == 13 && login()" type="password" class="form-control" name="password" ng-model="password" placeholder="Password" required>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Use email: <b>a@a.com</b> and password: <b>a</b> </label>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-8">
+					<a ng-click="login()" class="btn btn-small btn-default">Sign In</a>
+					<a data-toggle="collapse" data-target="#showEmailInput" ng-click="resetPassword()" class="btn btn-small">Forgot Your Password?</a>
+				</div>
+			</div>
+		
+		<div id="showEmailInput" class="collapse">
+			<div class="form-group">
+				<div class=" col-sm-offset-2 col-sm-4">
+					<input class="form-control" ng-model="recoveryEmail" placeholder="Recovery Email"/>
+					<a ng-click="resetPassword()" class="btn btn-small btn-primary">OK</a>
+				</div>
+			</div>		
+		</div>
+			
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-4">
+					<div class="alert {{loginAlerts.type}}">
+						{{loginAlerts.message}}
+					</div>
+				</div>
+			</div>
+		</form>
+	</div> <!-- panel body -->
+</div><!-- panel -->

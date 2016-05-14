@@ -1,0 +1,57 @@
+<div class="panel panel-default">
+	<div class="panel-heading panel-title">{{ heading }}<p class="title-sub">Add a new client.</p></div>
+	<div class="panel-body">
+		<form class="form-horizontal" role="form">
+			<div>
+				<div class="form-group">
+					<label for="firstname" class="col-sm-2 control-label">Firstname</label>
+					<div class="col-sm-4">
+						<input class="form-control" id="firstname"
+									 ng-model="firstname" placeholder="Firstname"/>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="lastname" class="col-sm-2 control-label">Lastname</label>
+					<div class="col-sm-4">
+						<input class="form-control" id="lastname"
+									 ng-model="lastname" placeholder="Lastname"/>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="lastname" class="col-sm-2 control-label">Available Devices <p>{{devices}}</p></label>
+				<div class="col-sm-4">
+					<div ng-repeat="item in selectedValues" class="display-selected">	
+						<span class="label label-primary"><a ng-click="deselect($index)"><b style="color:white;">  x  </b></a>&nbsp;{{item}}</span>
+					</div>
+					<input class="form-control" ng-model="searchText" placeholder="Search for device">
+					<select class="form-control" ng-model="selectedValues" multiple="multiple">
+						<option ng-repeat="option in selectOpts | filter:searchText" >{{ option.key }}</option>
+					</select>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="devicesOwned" class="col-sm-2 control-label">Devices Owned Currently</label>
+				<div class="col-sm-4">
+					<ul id="devicesOwned" class="list-group">
+						<li class="list-group-item" ng-repeat="item in devicesloaned">
+								<a class="btn btn-xs btn-danger" ng-click="removeDevice(item)">X</a>&nbsp;&nbsp;
+								<b ng-model="item.name" >{{ item.name }}</b>
+						</li>
+					</ul>
+				</div>
+			</div>
+			
+
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<a ng-click="cancel()" class="btn btn-small">Cancel</a>
+					<a ng-click="addItem()" class="btn btn-small btn-primary">Add</a>
+				</div>
+			</div>
+		</form>
+	</div> <!-- panel body -->
+</div><!-- panel -->

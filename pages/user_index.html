@@ -1,0 +1,56 @@
+
+	<div class="panel panel-default">
+		<div class="panel-heading panel-title">Clients<p class="title-sub">Full list of all the clients.</p></div>
+		<div align="left">
+			<form align="justified" style="padding:5px 3px 5px 3px" class="form-inline">
+				<div class="form-group">
+					<a href="#user/new" class="btn btn-primary"><span class="glyphicon glyphicon-plus">&nbsp;</span>Create New Client</a>
+					<a href="#devices" class="btn btn-primary"><span class="glyphicon glyphicon-phone">&nbsp;</span>View Devices</a>
+				</div>
+				&nbsp;&nbsp;
+				<div class="form-group">				
+					<div class="input-group">
+						<input type="text" ng-model="searchText" ng-change="search()" class="form-control" placeholder="Search" aria-describedby="basic-addon2">
+						<span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+					</div>
+				</div>
+				<!--&nbsp;&nbsp;&nbsp;
+				<div class="form-group">
+					<div class="input-group">
+						<select id="sort" class="form-control" ng-model="orderBy" placeholder="Sort">
+							<option></option>
+							<option>firstname</option>
+							<option>lastname</option>
+						</select>
+						<span class="input-group-addon"><span class="glyphicon glyphicon-sort-by-attributes"></span></span>
+					</div>								
+				</div>-->
+				&nbsp;&nbsp;&nbsp;
+				<div class="form-group">
+					<b>Show items:</b>
+					<div class="input-group">
+						<select class="form-control" ng-model="currentNumSelection" ng-options="opt.label for opt in showNumItemsOnPage"  ng-change="refreshTable(true)">
+						</select>
+					</div>								
+				</div>
+			</form>
+		</div>
+		<clients-paginated-table></clients-paginated-table>
+	</div>
+	
+	<div style="padding-bottom:2px;display:block-inline;">
+	<h4>Upload measurement file below&nbsp;<span class="glyphicon glyphicon-arrow-down"></span></h4><input type="file" accept=".txt" id="fileDialog" name="fileDialog"/>
+	</div>
+	
+	<div class="panel panel-default">
+		<div class="panel-heading panel-title">Moisture Measurements<p class="title-sub">Daily performance</p></div>
+		<div class="panel-body">
+			<h3 style="padding-bottom:10px;">{{ viewMsg }}</h3>
+			<div class="over">
+				<div style="width:5000px;">
+					<canvas height="25%" id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-legend="false" chart-series="series" chart-colours="colours" chart-click="onClick" >
+					</canvas>
+				</div>
+			</div>
+		</div> <!-- panel body -->
+	</div><!-- panel -->

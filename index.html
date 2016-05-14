@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Dashboard - Plata</title>
+
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.css"/>
+		
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous"/>
+
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css" integrity="sha384-aUGj/X2zp5rLCbBxumKTCw2Z50WgIr1vs/PFN4praOTvYXWlVyh2UtNUU0KAUhAX" crossorigin="anonymous"/>
+		
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.css"/>
+		
+		<link href="../css/searchableOptionList.css" rel="stylesheet">
+		
+		<!-- Custom styles for this template -->
+		<link href="../css/dashboard.css" rel="stylesheet">
+	
+		<style>
+			body {
+				
+			}
+			
+			#nav-sidebar-bg {
+				background: 
+				/* top, transparent black, faked with gradient */ 
+				linear-gradient(
+					rgba(0, 0, 0, 0.45), 
+					rgba(0, 0, 0, 0.45)
+				),
+				/* bottom, image */
+				url("../media/sidebar-image-1.png") repeat scroll 5px 100%;	
+				
+				margin: 0;
+				font-family: "Roboto","Helvetica Neue",Arial,sans-serif;
+				font-weight: 400;
+				line-height: 1.5;
+				font-size: 14px;
+				text-transform: uppercase;
+			}
+			
+			.sidebar .nav li.active > a {
+				color: #FFFFFF;
+				opacity: 1;
+				background: rgba(255, 255, 255, 0.23);
+			}
+			
+			.sidebar .nav li:hover > a {
+				background: rgba(255, 255, 255, 0.20);
+			}
+			
+			.sidebar .nav li > a {
+				color: #FFFFFF;
+				margin: 5px 15px;
+				opacity: 1;
+				border-radius: 4px;
+			}
+			
+			.title {
+				-moz-osx-font-smoothing: grayscale;
+				-webkit-font-smoothing: antialiased;
+				font-family: "Roboto","Helvetica Neue",Arial,sans-serif;
+				font-weight: 400;
+				padding:0px 10px 0px 10px;
+			}
+			
+			.title-sub {
+				-moz-osx-font-smoothing: grayscale;
+				-webkit-font-smoothing: antialiased;
+				font-family: "Roboto","Helvetica Neue",Arial,sans-serif;
+				font-weight: 50;
+				font-size: 14px;
+				color:blue;
+				padding:0px;
+			}
+			
+			.stats {
+				-moz-osx-font-smoothing: grayscale;
+				-webkit-font-smoothing: antialiased;
+				font-family: "Roboto","Helvetica Neue",Arial,sans-serif;
+				font-weight: 50;
+				color:grey;
+			}
+			
+			.thumbnail-inner {
+				overflow-x:auto;
+				padding-left:20px;
+			}
+			
+			.over {
+				overflow-x:auto;
+			}
+			
+			.over-y {
+				overflow-y:auto;
+				max-height:250px;
+			}
+			
+			.display-selected {
+				display: inline-block;
+				padding: 0px 0px 5px 5px;
+			}
+			
+			input.ng-invalid {
+				border-style:solid;
+				border-color:red;
+			}
+			input.ng-valid {
+					
+			}
+			
+			.panel-title {
+				font-family: "Roboto","Helvetica Neue",Arial,sans-serif;
+				font-weight: 400;
+				font-size:28px;
+			}
+			
+			.profile-name {
+				font-weight: 600;
+				background-color:rgba(0, 0, 0, 0.15);
+			}
+		</style>
+	</head>
+
+	<body ng-controller="GlobalCtrl">
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+					<!--<a class="navbar-brand" href="https://plata.firebaseapp.com"><img src="../media/plataLogo.png" alt="Brand" style="margin-top:-20px;width:68px;height:60px;"/></a>-->
+          <a class="navbar-brand" href="/dashboard">Dashboard</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+						<li><a href="#profile" class="profile-name"><span><img src="{{authData.password.profileImageURL}}" alt="Welcome!" class="img-circle" width="20px" height="20px"/>&nbsp;&nbsp;</span>{{ welcomeMsg }}</a></li>
+						<li><a href="https://plata.firebaseapp.com"><span class="glyphicon glyphicon-home">&nbsp;</span>Home</a></li>
+            <li><a href="#clients"><span alt="Clients" class="glyphicon glyphicon-list-alt">&nbsp;</span>Clients</a></li>
+						<li><a href="#devices"><span class="glyphicon glyphicon-phone">&nbsp;</span>Devices</a></li>
+            <li><a href="#help"><span class="glyphicon glyphicon-question-sign">&nbsp;</span>Help</a></li>
+						<li><a ng-click="logout()"><span class="glyphicon glyphicon-log-out">&nbsp;</span>Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+	
+    <div class="container-fluid">
+      <div class="row">
+        <div id="nav-sidebar-bg" class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+						<li role="presentation" class="active"><a href="#clients" aria-controls="clients" role="tab" data-toggle="tab"><span alt="Clients" class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;Clients<span class="sr-only">(current)</span></a></li>
+						<li role="presentation"><a href="#devices" aria-controls="devices" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-phone"></span>&nbsp;&nbsp;Devices</a></li>			
+          </ul>
+        </div>
+				
+				<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">	
+					<!-- angular templating -->
+					<!-- this is where content will be injected -->
+					<div ng-show="authData">
+						<h4 class="title-sub"><span class="glyphicon glyphicon-time"></span>&nbsp;{{ session }}</h4>
+					</div>
+					<div ng-view></div>
+					<footer>
+						<hr class="navbar-inverse">					
+						<ul class="list-inline">
+							<li><span><img src="../media/plataLogo.png" alt="logo" class="img-circle" width="52px" height="50px"/>&nbsp;&nbsp;</span>&copy; Plata 2016</li>
+						</ul>
+					</footer>
+				</div> <!--col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main-->  
+			</div> <!-- row -->
+		</div> <!-- container-fluid -->
+		
+
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+	<script src="js/app.js"></script>
+	<script src="../js/sol.js"></script>
+	
+	<script src="https://cdn.firebase.com/libs/angularfire/1.1.4/angularfire.min.js"></script>
+	<script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.min.js"></script>
+	<script>
+	$('.nav a').on('click', function(){
+		if (window.innerWidth < 768) {
+			$('.btn-navbar').click(); //bootstrap 2.x
+			$('.navbar-toggle').click() //bootstrap 3.x
+		}
+	});
+	</script>
+	
+  </body>
+</html>
